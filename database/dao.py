@@ -3,10 +3,9 @@ import pymysql
 class DAO:
     
     def __init__(self):
-        self.__connection()
-        pass
-    
-    def __connection(self):
+        self.__conectar()
+     
+    def __conectar(self):
         try:
             self.connection = pymysql.connect(
                 host = "localhost",
@@ -20,6 +19,9 @@ class DAO:
         except:
             print("Error al conectar a la base de datos")
         
-    
+    def desconectar(self):
+        self.connection.close()
+        print("Desconectado")
+        
 
-
+        

@@ -1,4 +1,4 @@
-class Person:
+class Persona:
     
     def __init__(self, rut:str, nombres:str, ape_paterno:str, ape_materno:str, telefono:int, correo:str):
         self.rut = rut
@@ -8,3 +8,5 @@ class Person:
         self.telefono = telefono
         self.correo = correo
         
+
+

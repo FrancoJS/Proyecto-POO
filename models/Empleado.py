@@ -1,7 +1,7 @@
-from Person import Person
+from models.Persona import Persona
 from datetime import date
 
-class Employe (Person):
+class Empleado (Persona):
     
     def __init__(self, rut: str, nombres: str, ape_paterno: str, ape_materno: str, telefono: int, correo: str,
                  id: int, experiencia: int, inicio_contrato: date, salario: int):
