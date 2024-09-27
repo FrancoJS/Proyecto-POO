@@ -1,8 +1,10 @@
 from controllers.user_controller import UsuarioController
+from controllers.sucursal_controller import SucursalController
 from models.Empleado import Empleado
 from models.Sucursal import Sucursal
 from database.dao import DAO
 from os import system
+from datetime import datetime
 
 class Funciones:
     
@@ -21,59 +23,74 @@ class Funciones:
             correo = str(input("Correo: "))
             clave = str(input("Contraseña: "))
 
-            usuario_controller = UsuarioController()
-            usuario_controller.crear_usuario(rut, nombres, ape_paterno, ape_materno, telefono, correo, clave)
+            usuario = UsuarioController()
+            usuario.crearUsuario(rut, nombres, ape_paterno, ape_materno, telefono, correo, clave)
+            print("Usuario registrado exitosamente")
             system("pause")
             self.__menuMesaAyuda()
         except Exception as e:
-            print("Ocurrio un error al Registrar, porfavor intentelo denuevo", e)
+            print(e)
         
     def iniciarSesion(self):
-        system("cls")
-        print("----INICIAR SESION----")
-        rut = str(input("Rut: "))
-        clave = str(input("Contraseña: "))
-        
-        sql = "SELECT rut, clave, correo, nombres from USUARIOS WHERE rut = %s"
-        self.__cursor.execute(sql,(rut))
-        usuario = self.__cursor.fetchone()
-        
-        if not usuario:
-            print("Usuario no se encuentra registrado")
-            return
-        
-        if usuario[1] != clave:
-            print("Rut de usuario o contraseña incorrectos")
-            return
-        
-        print("----INICIO DE SESION EXITOSO----")
-        system("pause")
-        self.__u_correo = usuario[2]
-        self.__u_nombres = usuario[3]
-        self.__menuMesaAyuda()
-        
+        try:
+            system("cls")
+            print("----INICIAR SESION----")
+            rut = str(input("Rut: "))
+            clave = str(input("Contraseña: "))
+
+            if not self.__usuario_controller.validarCredenciales(rut, clave):
+                print("Usuario no se encuentra registrado o la contraseña es incorrecta")
+                return
+
+            print("----INICIO DE SESION EXITOSO----")
+            system("pause")
+            self.__menuMesaAyuda()
+        except Exception as e:
+            print(e)
+            
     def __menuMesaAyuda(self):
         system("cls")
-        print(f"USUARIO: Correo@ {self.__u_correo} --- Nombres {self.__u_nombres}")
         print("---BIENVENIDO AL MENU DE MESA DE AYUDA---")
         print("1. Gestion de Empleados")
         print("2. Gestion de Sucursales")
         opcion = int(input("Digite una opcion: "))
         
         if opcion == 1:
-            self.__gestionEmpleados()
+            self.__gestionEmpleados
         elif opcion == 2:
-            self.__gestionSucursales()
-        
+            self.__gestionSucursales
+            
+     
         
     def __gestionEmpleados(self):
         print("MENU EMPLEADOS")
         
     def __gestionSucursales(self):
         print("MENU SUCURSALES")
+        print("1. Crear sucursal")
+        opcion = int(input("Ingrese opcion"))
+        if opcion == 1: 
+            self.__crearSucursal()
         
+    def crearSucursal(self):
+        try:
+            system("cls")
+            print("---CREAR SUCURSAL---")
+            nombre = str(input("Ingrese el nombre: "))
+            direccion = str(input("Ingrese direccion: "))
+            fecha_constitucion = input("Ingrese la fecha (YYYY-MM-DD): ")
+            fecha = datetime.strptime(fecha_constitucion,'%Y-%m-%d')
+            sucursal_controller = SucursalController()
+            id_sucursal = sucursal_controller.crearSucursal(nombre,direccion,fecha)
+            print(f"Sucursal creada exitosamente ID: {id_sucursal}")
+        except Exception as e:
+            print(e)
+        except ValueError:
+            print("Debe ingresar la fecha en el formato (YYYY-MM-DD)")
+            
             
     
 func = Funciones()
-func.registrarUsuario()
+# func.registrarUsuario()
 # func.iniciarSesion()
+func.crearSucursal()
