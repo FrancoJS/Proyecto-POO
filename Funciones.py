@@ -1,4 +1,4 @@
-from models.Usuario import Usuario
+from controllers.user_controller import UsuarioController
 from models.Empleado import Empleado
 from models.Sucursal import Sucursal
 from database.dao import DAO
@@ -7,9 +7,7 @@ from os import system
 class Funciones:
     
     def __init__(self):
-        self.__dao = DAO()
-        self.__connection = self.__dao.connection
-        self.__cursor = self.__dao.cursor
+        pass
         
     def registrarUsuario(self):
         try:
@@ -23,22 +21,12 @@ class Funciones:
             correo = str(input("Correo: "))
             clave = str(input("Contraseña: "))
 
-            usuario = Usuario(rut, nombres ,ape_paterno, ape_materno, telefono, correo)
-            usuario.setClave(clave)
-
-            valores = (usuario.rut, usuario.nombres, usuario.ape_paterno, usuario.ape_materno, usuario.telefono, usuario.correo, usuario.getClave)
-
-            sql = "INSERT INTO USUARIOS (rut, nombres, ape_paterno, ape_materno, telefono, correo, clave) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            self.__cursor.execute(sql, valores )
-            self.__connection.commit()
-            
-            self.__u_correo = usuario.correo
-            self.__u_nombres = usuario.nombres
-            print("----REGISTRO EXITOSO----")
+            usuario_controller = UsuarioController()
+            usuario_controller.crear_usuario(rut, nombres, ape_paterno, ape_materno, telefono, correo, clave)
             system("pause")
             self.__menuMesaAyuda()
-        except:
-            print("Ocurrio un error al Registrar, porfavor intentelo denuevo")
+        except Exception as e:
+            print("Ocurrio un error al Registrar, porfavor intentelo denuevo", e)
         
     def iniciarSesion(self):
         system("cls")
@@ -88,4 +76,4 @@ class Funciones:
     
 func = Funciones()
 func.registrarUsuario()
-func.iniciarSesion()
+# func.iniciarSesion()
