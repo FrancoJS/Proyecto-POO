@@ -7,7 +7,6 @@ from os import system
 from datetime import datetime
 
 class Funciones:
-    
     def __init__(self):
         pass
         
@@ -60,8 +59,6 @@ class Funciones:
         elif opcion == 2:
             self.__gestionSucursales
             
-     
-        
     def __gestionEmpleados(self):
         print("MENU EMPLEADOS")
         
@@ -87,6 +84,10 @@ class Funciones:
             print(e)
         except ValueError:
             print("Debe ingresar la fecha en el formato (YYYY-MM-DD)")
+            
+    def crearEmpleado(self):
+        
+        pass
             
             
     

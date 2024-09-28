@@ -8,6 +8,7 @@ class Empleado_Controller:
         self.__dao = DAO()
        
     
-    def crearEmpleado(self, rut:str , nombres:str , ape_paterno: str, ape_materno:str , telefono:int , correo:str , experiencia:int , fecha_contrato:date , salario:int ):
+    def crearEmpleado(self, rut:str, nombres:str, ape_paterno:str, ape_materno:str, telefono:int, correo:str, experiencia:int, inicio_contrato:date ,salario:int ):
         
         pass
+        
