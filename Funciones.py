@@ -1,6 +1,7 @@
 from controllers.user_controller import UsuarioController
 from controllers.sucursal_controller import SucursalController
-from models.Empleado import Empleado
+from utils.obtener_datos_persona import DatosPersona
+from utils.password_service import obtenerClave
 from models.Sucursal import Sucursal
 from database.dao import DAO
 from os import system
@@ -14,14 +15,8 @@ class Funciones:
         try:
             system("cls")
             print("----REGISTRAR----")
-            rut = str(input("Rut: "))
-            nombres = str(input("Nombres: "))
-            ape_paterno = str(input("Apellido P: "))
-            ape_materno = str(input("Apellido M: "))
-            telefono = int(input("Numero Telefono: "))
-            correo = str(input("Correo: "))
-            clave = str(input("Contraseña: "))
-
+            rut, nombres, ape_paterno, ape_materno, telefono, correo = DatosPersona().obtenerDatos()
+            clave = obtenerClave()
             usuario = UsuarioController()
             usuario.crearUsuario(rut, nombres, ape_paterno, ape_materno, telefono, correo, clave)
             print("Usuario registrado exitosamente")
@@ -92,6 +87,6 @@ class Funciones:
             
     
 func = Funciones()
-# func.registrarUsuario()
+func.registrarUsuario()
 # func.iniciarSesion()
-func.crearSucursal()
+# func.crearSucursal()
